@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "None",
+    "target": "es6",
+    "sourceMap": false,
+    "lib": [
+      "dom",
+      "es6"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
