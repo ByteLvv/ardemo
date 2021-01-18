@@ -76,9 +76,9 @@ webAR.openCamera(constraints).then(() => {
 ### 5. 开发与部署说明
 
 开发环境可以使用 
-http://127.0.0.1:3000/3d
+http://127.0.0.1:3001/3d
 或
-http://127.0.0.1:3000/video
+http://127.0.0.1:3001/video
 地址访问。
 
 可以使用本站提供的HTTP WEB服务软件运行：https://github.com/wujianar/simple-server
