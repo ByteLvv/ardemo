@@ -61,12 +61,26 @@ webAR.openCamera(constraints).then(() => {
 });
 ```
 
-### 3. 视频或3D模型渲染
+### 3. 识别
+
+请将摄像头对准识别图 (示例使用的识别图为marker.jpg)。
+
+### 4. 视频或3D模型渲染
 
 视频播放可以使用HTML5的video；
 
 3D模型渲染可以使用threejs等WebGL库。
 
-### 4. 示例下载
+如本示例中的 video 与 3d。
+
+### 5. 开发与部署说明
+
+开发环境可以使用 http://127.0.0.1:3000/3d　或 http://127.0.0.1:3000/video 地址访问。
+
+可以使用本站提供的HTTP WEB服务软件运行：https://github.com/wujianar/ardemo
+
+线上环境建议使用Nginx或Apache软件，需要HTTPS域名支持。
+
+### 6. 示例下载
 
 [示例下载: https://github.com/wujianar/ardemo](https://github.com/wujianar/ardemo)
