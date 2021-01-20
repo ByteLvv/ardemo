@@ -68,8 +68,8 @@ class WebAR {
         return new Promise((resolve, reject) => {
             navigator.mediaDevices.getUserMedia(constraints).then(stream => {
                 this.videoElement.srcObject = stream;
-                this.videoElement.play().then(msg => {
-                    console.info('video play success:', msg);
+                this.videoElement.play().then(() => {
+                    console.info('video play success');
                 }).catch(err => {
                     console.info('video play error:', err);
                 });

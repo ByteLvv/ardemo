@@ -30,7 +30,6 @@ class App {
                     this.toast('识别成功');
                     console.info('识别成功');
                     console.info(msg);
-                    // this.openPage('page2', 'page4');
                     // 识别成功,加载模型
                     // 建议将模型参数保存在云识别的brief字段中,可以在服务端动态更调整模型参数
                     this.showModel(JSON.parse(msg.brief));
@@ -80,6 +79,7 @@ class App {
         }
         const m = new Model();
         m.loadModel(setting, (e) => {
+            // 加载进度
             console.info(e.loaded, e.total);
         });
     }

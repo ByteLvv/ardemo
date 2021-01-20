@@ -65,8 +65,8 @@ class WebAR {
         return new Promise((resolve, reject) => {
             navigator.mediaDevices.getUserMedia(constraints).then(stream => {
                 this.videoElement.srcObject = stream;
-                this.videoElement.play().then(msg => {
-                    console.info('video play success:', msg);
+                this.videoElement.play().then(() => {
+                    console.info('video play success');
                 }).catch(err => {
                     console.info('video play error:', err);
                 });
@@ -120,6 +120,7 @@ class WebAR {
                 const data = new FormData();
                 data.append('file', blob);
                 this.httpPost(data).then(res => res.json()).then(rs => {
+                    console.info(rs);
                     this.isSearching = false;
                     if (rs.code === 0) {
                         if (autoStop)
