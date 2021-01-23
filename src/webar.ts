@@ -1,5 +1,7 @@
 /**
  * WebAR
+ *
+ * 技术支持： https://www.wujianar.com
  */
 class WebAR {
     private readonly endpoint: string;
@@ -85,10 +87,8 @@ class WebAR {
                         if (cameraSize.height < window.innerHeight) {
                             this.videoElement.setAttribute('height', `${window.innerHeight}px`);
                         }
-                    } else {
-                        if (cameraSize.width < window.innerWidth) {
-                            this.videoElement.setAttribute('width', `${window.innerWidth}px`);
-                        }
+                    } else if (cameraSize.width < window.innerWidth) {
+                        this.videoElement.setAttribute('width', `${window.innerWidth}px`);
                     }
                     resolve();
                 };
@@ -107,7 +107,7 @@ class WebAR {
             this.canvasContext.drawImage(this.videoElement, 0, 0, this.videoElement.offsetWidth, this.videoElement.offsetHeight);
             this.canvasElement.toBlob(blob => {
                 resolve(blob);
-            },'image/jpeg', 0.5);
+            }, 'image/jpeg', 0.5);
         }));
     }
 
@@ -130,7 +130,9 @@ class WebAR {
                 this.httpPost(data).then(res => res.json()).then(rs => {
                     this.isSearching = false;
                     if (rs.code === 0) {
-                        if (autoStop) this.stopSearch();
+                        if (autoStop) {
+                            this.stopSearch();
+                        }
                         callback(rs.result);
                     }
                 }).catch(err => {
@@ -160,7 +162,7 @@ class WebAR {
      * @param data
      */
     private httpPost(data: any): Promise<any> {
-        return window.fetch(this.endpoint +'/search', {
+        return window.fetch(this.endpoint + '/search', {
             method: 'POST',
             headers: {
                 'Authorization': this.token

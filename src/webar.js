@@ -9,6 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 /**
  * WebAR
+ *
+ * 技术支持： https://www.wujianar.com
  */
 class WebAR {
     constructor(endpoint, token, interval = 500) {
@@ -81,10 +83,8 @@ class WebAR {
                             this.videoElement.setAttribute('height', `${window.innerHeight}px`);
                         }
                     }
-                    else {
-                        if (cameraSize.width < window.innerWidth) {
-                            this.videoElement.setAttribute('width', `${window.innerWidth}px`);
-                        }
+                    else if (cameraSize.width < window.innerWidth) {
+                        this.videoElement.setAttribute('width', `${window.innerWidth}px`);
                     }
                     resolve();
                 };
@@ -120,11 +120,11 @@ class WebAR {
                 const data = new FormData();
                 data.append('file', blob);
                 this.httpPost(data).then(res => res.json()).then(rs => {
-                    console.info(rs);
                     this.isSearching = false;
                     if (rs.code === 0) {
-                        if (autoStop)
+                        if (autoStop) {
                             this.stopSearch();
+                        }
                         callback(rs.result);
                     }
                 }).catch(err => {

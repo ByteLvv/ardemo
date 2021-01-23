@@ -2,6 +2,7 @@ class Model {
     constructor() {
         this.mixers = [];
         this.clock = new THREE.Clock();
+        this.player = null;
         this.mixers = [];
         this.scene = new THREE.Scene();
         this.scene.add(new THREE.AmbientLight(0xFFFFFF));
@@ -38,7 +39,7 @@ class Model {
             return;
         }
         loader.load(setting.modelUrl, (obj) => {
-            this.addAnimation(obj, setting);
+            this.addModel(obj, setting);
         }, (e) => {
             callback(e);
         }, (err) => {
@@ -58,15 +59,24 @@ class Model {
         }
         return loader;
     }
-    addAnimation(obj, setting) {
-        const m = obj.scene ? obj.scene : obj;
-        m.scale.setScalar(setting.scale);
-        m.position.set(setting.position[0], setting.position[1], setting.position[2]);
-        this.scene.add(m);
+    addModel(obj, setting) {
+        this.player = obj.scene || obj;
+        console.info(this.player);
+        this.player.scale.setScalar(setting.scale);
+        this.player.position.set(setting.position[0], setting.position[1], setting.position[2]);
+        this.scene.add(this.player);
         if (obj.animations.length > 0) {
-            const mixer = new THREE.AnimationMixer(m);
+            const mixer = new THREE.AnimationMixer(this.player);
             mixer.clipAction(obj.animations[setting.clipAction]).play();
             this.mixers.push(mixer);
         }
+    }
+    removeModel() {
+        if (!this.player) {
+            return;
+        }
+        this.scene.remove(this.player);
+        this.player = null;
+        this.mixers = [];
     }
 }

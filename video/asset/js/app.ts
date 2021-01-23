@@ -29,20 +29,8 @@ class App {
                 isOpening = false;
                 this.openPage('page1', 'page2');
 
-                console.info('打开摄像头成功');
-
                 // 开始识别
-                this.webAR.startSearch((msg: any) => {
-                    this.toast('识别成功');
-                    console.info('识别成功');
-                    console.info(msg);
-                    this.openPage('page2', 'page4');
-
-                    // 识别成功,播放视频
-                    // 建议将视频地址保存在云识别的brief字段中,可以在服务端动态更换视频地址
-                    // this.showVideo(JSON.parse(msg.brief));
-                    this.showVideo({'videoUrl': 'asset/videos/demo.mp4'});
-                });
+                this.search();
             }).catch(err => {
                 isOpening = false;
                 console.info('打开摄像头失败');
@@ -56,22 +44,41 @@ class App {
             this.openPage('page1', 'page4');
             this.showVideo({'videoUrl': 'asset/videos/demo.mp4'});
         });
+
+        // 关闭按钮
+        document.querySelector('#btnCloseShow').addEventListener('click', () => {
+            this.removeVideo();
+            this.hideTarget('#btnCloseShow');
+            this.search();
+        });
     }
 
-    private openPage(from: string, to: string): void {
-        if (from != '') {
-            document.querySelector(`#${from}`).classList.add('hide');
-        }
+    /**
+     * 识别
+     */
+    private search(): void {
+        this.webAR.startSearch((msg: any) => {
+            this.toast('识别成功');
+            this.showTarget('#btnCloseShow');
+            this.openPage('page2', 'page4');
 
-        if (to != '') {
-            document.querySelector(`#${to}`).classList.remove('hide');
-        }
+            // 识别成功,播放视频
+            // 建议将视频地址保存在云识别的brief字段中,可以在服务端动态更换视频地址
+            // this.showVideo(JSON.parse(msg.brief));
+            this.showVideo({'videoUrl': 'asset/videos/demo.mp4'});
+        });
     }
 
     private showVideo(setting: any): void {
-        console.info(setting);
-        console.info('showVideo');
         this.playVideo(setting.videoUrl, true);
+    }
+
+
+    private removeVideo(): void {
+        this.openPage('page4', 'page2');
+        const video: HTMLMediaElement = document.querySelector('#showVideo');
+        video.pause();
+        video.removeAttribute('src');
     }
 
     private playVideo(videoUrl: string, autoPlay: boolean = true): void {
@@ -98,6 +105,24 @@ class App {
 
     private isWeiXin(): boolean {
         return /micromessenger/.test(navigator.userAgent.toLowerCase())
+    }
+
+    private hideTarget(target: string): void {
+        document.querySelector(target).classList.add('hide');
+    }
+
+    private showTarget(target: string): void {
+        document.querySelector(target).classList.remove('hide');
+    }
+
+    private openPage(from: string, to: string): void {
+        if (from != '') {
+            document.querySelector(`#${from}`).classList.add('hide');
+        }
+
+        if (to != '') {
+            document.querySelector(`#${to}`).classList.remove('hide');
+        }
     }
 
     private toast(text: string, delay = 2000): void {

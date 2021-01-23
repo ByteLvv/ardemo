@@ -1,47 +1,5 @@
 html {
-    font-size: 10px
-}
-
-@media screen and (min-width: 321px) and (max-width: 375px) {
-    html {
-        font-size: 11px
-    }
-}
-
-@media screen and (min-width: 376px) and (max-width: 414px) {
-    html {
-        font-size: 12px
-    }
-}
-
-@media screen and (min-width: 415px) and (max-width: 639px) {
-    html {
-        font-size: 15px
-    }
-}
-
-@media screen and (min-width: 640px) and (max-width: 719px) {
-    html {
-        font-size: 20px
-    }
-}
-
-@media screen and (min-width: 720px) and (max-width: 749px) {
-    html {
-        font-size: 22.5px
-    }
-}
-
-@media screen and (min-width: 750px) and (max-width: 799px) {
-    html {
-        font-size: 23.5px
-    }
-}
-
-@media screen and (min-width: 800px) {
-    html {
-        font-size: 25px
-    }
+    font-size: 62.5%
 }
 
 body {
@@ -54,11 +12,11 @@ body {
     position: fixed;
     overflow: hidden;
     background: #000;
-    font-size: 1.2em;
+    font-size: 1.6em;
 }
 
 .hide {
-    display: none;
+    display: none !important;
 }
 
 .mask {
@@ -78,7 +36,6 @@ body {
     color: #FFF;
     padding: 6px 0;
     border-radius: 8px;
-    font-size: 0.9em;
     text-align: center;
 }
 
@@ -142,6 +99,30 @@ body {
     text-align: center;
     top: 10vh;
     width: 100%;
+}
+
+#page2 #btnCloseShow {
+    position: absolute;
+    z-index: 10000;
+    top: 1em;
+    right: 1em;
+    background: rgba(255, 255, 255, 0.85);
+    color: #333;
+    width: 1.8em;
+    height: 1.8em;
+    line-height: 1.8em;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#page2 #btnProgress {
+    position: absolute;
+    z-index: 10000;
+    bottom: 30%;
+    width: 70%;
+    left: 15%;
+    text-align: center;
 }
 
 #page3 {

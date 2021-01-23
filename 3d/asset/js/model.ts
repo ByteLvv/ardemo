@@ -1,9 +1,10 @@
 class Model {
-    private readonly mixers: THREE.AnimationMixer = [];
+    private mixers: THREE.AnimationMixer = [];
     private readonly scene: THREE.Scene;
     private readonly camera: THREE.Camera;
     private renderer: THREE.Renderer;
     private clock = new THREE.Clock();
+    private player: any = null;
 
     constructor() {
         this.mixers = [];
@@ -50,7 +51,7 @@ class Model {
         }
 
         loader.load(setting.modelUrl, (obj) => {
-            this.addAnimation(obj, setting);
+            this.addModel(obj, setting);
         }, (e) => {
             callback(e);
         }, (err) => {
@@ -73,16 +74,27 @@ class Model {
         return loader;
     }
 
-    private addAnimation(obj: any, setting: any): void {
-        const m = obj.scene ? obj.scene : obj;
-        m.scale.setScalar(setting.scale);
-        m.position.set(setting.position[0],setting.position[1],setting.position[2]);
-        this.scene.add(m);
+    private addModel(obj: any, setting: any): void {
+        this.player = obj.scene || obj;
+        console.info(this.player);
+        this.player.scale.setScalar(setting.scale);
+        this.player.position.set(setting.position[0],setting.position[1],setting.position[2]);
+        this.scene.add(this.player);
 
         if (obj.animations.length > 0) {
-            const mixer = new THREE.AnimationMixer(m);
+            const mixer = new THREE.AnimationMixer(this.player);
             mixer.clipAction(obj.animations[setting.clipAction]).play();
             this.mixers.push(mixer);
         }
+    }
+
+    public removeModel(): void {
+        if (!this.player) {
+            return;
+        }
+
+        this.scene.remove(this.player);
+        this.player = null;
+        this.mixers = [];
     }
 }

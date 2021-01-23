@@ -3,6 +3,8 @@ class App {
         // 认证token,请从官网获取
         const token = 'YzliYjE5YzFmYTY1MGYyMmM1OTc2YTEyZDlkNGJkZmQ4OGU3NThhYTIxY2RiZWFhN2Q1MDg3ZjE0MWM5NjIzM3siYWNjZXNzS2V5IjoiODg3ZjE2MmFlYTY4NDk0OGE3OTI1MzNkNWZlZjY0NmQiLCJleHBpcmVzIjozMjUyODY1Mzc1MzEwfQ==';
         this.webAR = new WebAR('https://887f162aea684948a792533d5fef646d.iss-cn1.wujianar.com', token, 1000);
+        this.model = new Model();
+        this.progress = document.querySelector('#btnProgress');
         if (window.VConsole)
             new VConsole();
     }
@@ -24,20 +26,10 @@ class App {
             this.webAR.tryCamera().then(msg => {
                 isOpening = false;
                 this.openPage('page1', 'page2');
-                console.info('打开摄像头成功');
                 // 开始识别
-                this.webAR.startSearch((msg) => {
-                    this.toast('识别成功');
-                    console.info('识别成功');
-                    console.info(msg);
-                    // 识别成功,加载模型
-                    // 建议将模型参数保存在云识别的brief字段中,可以在服务端动态更调整模型参数
-                    this.showModel(JSON.parse(msg.brief));
-                    // this.showModel();
-                });
+                this.search();
             }).catch(err => {
                 isOpening = false;
-                console.info('打开摄像头失败');
                 console.error(err);
                 alert('打开摄像头失败');
             });
@@ -47,22 +39,35 @@ class App {
             this.openPage('page1', 'page2');
             this.showModel();
         });
+        // 关闭按钮
+        document.querySelector('#btnCloseShow').addEventListener('click', () => {
+            this.model.removeModel();
+            this.showTarget('#scanTip');
+            this.hideTarget('#btnCloseShow');
+            this.search();
+        });
     }
-    hideScan() {
-        document.querySelector('#scanTip').classList.add('hide');
+    /**
+     * 识别
+     */
+    search() {
+        this.webAR.startSearch((msg) => {
+            this.toast('识别成功');
+            this.showTarget('#btnCloseShow');
+            console.info(msg);
+            // 识别成功,加载模型
+            // 建议将模型参数保存在云识别的brief字段中,可以在服务端动态更新调整模型参数
+            this.showModel(JSON.parse(msg.brief));
+        }, true);
     }
-    openPage(from, to) {
-        if (from != '') {
-            document.querySelector(`#${from}`).classList.add('hide');
-        }
-        if (to != '') {
-            document.querySelector(`#${to}`).classList.remove('hide');
-        }
-    }
+    /**
+     * 加载模型
+     * @param setting
+     */
     showModel(setting = null) {
-        this.hideScan();
+        this.hideTarget('#scanTip');
         if (!setting) {
-            // 可以奖setting保存在云误识别的brief字段中
+            // 可以奖setting保存在云识别的brief字段中
             // setting = {
             //     "modelUrl": "asset/models/SambaDancing.fbx",
             //     "scale": 0.03,
@@ -77,10 +82,18 @@ class App {
                 "clipAction": 6
             };
         }
-        const m = new Model();
-        m.loadModel(setting, (e) => {
-            // 加载进度
-            console.info(e.loaded, e.total);
+        // 加载进度
+        this.showTarget('#btnProgress');
+        this.progress.value = 0;
+        this.model.loadModel(setting, (e) => {
+            const v = Math.floor(e.loaded / (e.total * 1.0) * 100);
+            this.progress.value = v;
+            if (v >= 100) {
+                // 在低端上会有卡顿，直接跳过100%
+                window.setTimeout(() => {
+                    this.hideTarget('#btnProgress');
+                }, 1000);
+            }
         });
     }
     isIos() {
@@ -88,6 +101,20 @@ class App {
     }
     isWeiXin() {
         return /micromessenger/.test(navigator.userAgent.toLowerCase());
+    }
+    hideTarget(target) {
+        document.querySelector(target).classList.add('hide');
+    }
+    showTarget(target) {
+        document.querySelector(target).classList.remove('hide');
+    }
+    openPage(from, to) {
+        if (from != '') {
+            this.hideTarget(`#${from}`);
+        }
+        if (to != '') {
+            this.showTarget(`#${to}`);
+        }
     }
     toast(text, delay = 2000) {
         const el = document.createElement('div');

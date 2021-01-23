@@ -156,6 +156,24 @@ body {
     height: 10vh
 }
 
+#page4 {
+}
+
+#page4 #btnCloseShow {
+    position: absolute;
+    z-index: 10000;
+    top: 1em;
+    right: 1em;
+    background: rgba(255, 255, 255, 0.85);
+    color: #333;
+    width: 1.8em;
+    height: 1.8em;
+    line-height: 1.8em;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
 #page3 .tip {
     position: absolute;
     top: 18vh;
