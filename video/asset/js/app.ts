@@ -64,8 +64,8 @@ class App {
 
             // 识别成功,播放视频
             // 建议将视频地址保存在云识别的brief字段中,可以在服务端动态更换视频地址
-            // this.showVideo(JSON.parse(msg.brief));
-            this.showVideo({'videoUrl': 'asset/videos/demo.mp4'});
+            this.showVideo(JSON.parse(msg.brief));
+            // this.showVideo({'videoUrl': 'asset/videos/demo.mp4'});
         });
     }
 
