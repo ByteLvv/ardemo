@@ -5,8 +5,8 @@ class App {
 
     constructor() {
         // 认证token,请从官网获取
-        const token = 'YzliYjE5YzFmYTY1MGYyMmM1OTc2YTEyZDlkNGJkZmQ4OGU3NThhYTIxY2RiZWFhN2Q1MDg3ZjE0MWM5NjIzM3siYWNjZXNzS2V5IjoiODg3ZjE2MmFlYTY4NDk0OGE3OTI1MzNkNWZlZjY0NmQiLCJleHBpcmVzIjozMjUyODY1Mzc1MzEwfQ==';
-        this.webAR = new WebAR('https://887f162aea684948a792533d5fef646d.iss-cn1.wujianar.com', token, 1000);
+        const token = 'YTU5NjgxYzU1NDAxM2ZiNWQ0OGMxOGY5Yjk2ZThlYjYxNzY2M2EwOGQ5NmIzMTYzZjYwZDkxOTQwODk2NTc2ZHsiYWNjZXNzS2V5IjoiODg3ZjE2MmFlYTY4NDk0OGE3OTI1MzNkNWZlZjY0NmQiLCJleHBpcmVzIjozMjc4MjM0NzU5NTk4fQ==';
+        this.webAR = new WebAR('https://iss-cn1.wujianar.com', token, 1000);
         this.model = new Model();
         this.progress = document.querySelector('#btnProgress');
 
