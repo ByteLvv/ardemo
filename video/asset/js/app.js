@@ -49,12 +49,16 @@ class App {
      * 识别
      */
     search() {
+        this.showTarget('#scanTip');
+        this.showTarget('#scanLine');
         this.webAR.startSearch((msg) => {
+            this.hideTarget('#scanTip');
+            this.hideTarget('#scanLine');
             this.toast('识别成功');
-            this.showTarget('#btnCloseShow');
             this.openPage('page2', 'page4');
             // 识别成功,播放视频
             // 建议将视频地址保存在云识别的brief字段中,可以在服务端动态更换视频地址
+            this.showTarget('#btnCloseShow');
             this.showVideo(JSON.parse(msg.brief));
             // this.showVideo({'videoUrl': 'asset/videos/demo.mp4'});
         });
@@ -74,7 +78,7 @@ class App {
         video.play().then(() => {
             console.info('视频播放成功');
         }).catch((err) => {
-            console.info('视频播放失败');
+            this.toast('视频播放失败');
             console.info(err);
         });
         if (!autoPlay) {
@@ -97,10 +101,10 @@ class App {
     }
     openPage(from, to) {
         if (from != '') {
-            document.querySelector(`#${from}`).classList.add('hide');
+            this.hideTarget(`#${from}`);
         }
         if (to != '') {
-            document.querySelector(`#${to}`).classList.remove('hide');
+            this.showTarget(`#${to}`);
         }
     }
     toast(text, delay = 2000) {

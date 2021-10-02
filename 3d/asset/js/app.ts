@@ -52,7 +52,6 @@ class App {
         // 关闭按钮
         document.querySelector('#btnCloseShow').addEventListener('click', () => {
             this.model.removeModel();
-            this.showTarget('#scanTip');
             this.hideTarget('#btnCloseShow');
             this.search();
         });
@@ -62,14 +61,19 @@ class App {
      * 识别
      */
     private search(): void {
+        this.showTarget('#scanTip');
+        this.showTarget('#scanLine');
+
         this.webAR.startSearch((msg: any) => {
+            this.hideTarget('#scanTip');
+            this.hideTarget('#scanLine');
             this.toast('识别成功');
             this.showTarget('#btnCloseShow');
-            console.info(msg);
 
             // 识别成功,加载模型
             // 建议将模型参数保存在云识别的brief字段中,可以在服务端动态更新调整模型参数
             this.showModel(JSON.parse(msg.brief));
+            this.showTarget('#btnCloseShow');
         }, true);
     }
 
@@ -78,17 +82,8 @@ class App {
      * @param setting
      */
     private showModel(setting: any = null): void {
-       this.hideTarget('#scanTip');
-
         if (!setting) {
             // 可以奖setting保存在云识别的brief字段中
-            // setting = {
-            //     "modelUrl": "asset/models/SambaDancing.fbx",
-            //     "scale": 0.03,
-            //     "position": [0, -2, 0],
-            //     "clipAction": 0
-            // };
-            //
             setting = {
                 "modelUrl": "asset/models/RobotExpressive.glb",
                 "scale": 0.85,
@@ -104,7 +99,7 @@ class App {
             const v = Math.floor(e.loaded / (e.total * 1.0) * 100);
             this.progress.value = v;
             if (v >= 100) {
-                // 在低端上会有卡顿，直接跳过100%
+                // 在低端机上会有卡顿，直接跳过100%
                 window.setTimeout(() => {
                     this.hideTarget('#btnProgress');
                 }, 1000);

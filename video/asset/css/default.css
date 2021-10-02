@@ -1,47 +1,5 @@
 html {
-    font-size: 10px
-}
-
-@media screen and (min-width: 321px) and (max-width: 375px) {
-    html {
-        font-size: 11px
-    }
-}
-
-@media screen and (min-width: 376px) and (max-width: 414px) {
-    html {
-        font-size: 12px
-    }
-}
-
-@media screen and (min-width: 415px) and (max-width: 639px) {
-    html {
-        font-size: 15px
-    }
-}
-
-@media screen and (min-width: 640px) and (max-width: 719px) {
-    html {
-        font-size: 20px
-    }
-}
-
-@media screen and (min-width: 720px) and (max-width: 749px) {
-    html {
-        font-size: 22.5px
-    }
-}
-
-@media screen and (min-width: 750px) and (max-width: 799px) {
-    html {
-        font-size: 23.5px
-    }
-}
-
-@media screen and (min-width: 800px) {
-    html {
-        font-size: 25px
-    }
+    font-size: 62.5%;
 }
 
 body {
@@ -54,11 +12,11 @@ body {
     position: fixed;
     overflow: hidden;
     background: #000;
-    font-size: 1.2em;
+    font-size: 1.6em;
 }
 
 .hide {
-    display: none;
+    display: none !important;
 }
 
 .mask {
@@ -76,9 +34,9 @@ body {
     left: 15%;
     background: rgba(50, 50, 50, 0.75);
     color: #FFF;
-    padding: 6px 0;
-    border-radius: 8px;
-    font-size: 0.9em;
+    padding: 0.6rem 0;
+    border-radius: 0.8rem;
+    font-size: 1em;
     text-align: center;
 }
 
@@ -100,26 +58,24 @@ body {
 #page1 .page1-tip {
     color: #FFFFFF;
     text-align: center;
+    padding: 2vh 5vw;
 }
 
 .btn-group {
     position: absolute;
     top: 75%;
     width: 100%;
-    height: 20%;
     text-align: center;
-    border: 0;
 }
 
 .btn-group span {
     cursor: pointer;
     display: inline-block;
     border: 1px solid #04be02;
-    border-radius: 4px;
-    padding: 6px 12px;
+    border-radius: 0.4rem;
+    padding: 0.6rem 1.2rem;
     background: #04be02;
     color: #FFFFFF;
-    font-size: 1.0em;
 }
 
 .btn-group span:last-child {
@@ -156,9 +112,6 @@ body {
     height: 10vh
 }
 
-#page4 {
-}
-
 #page4 #btnCloseShow {
     position: absolute;
     z-index: 10000;
@@ -182,6 +135,9 @@ body {
     color: white;
 }
 
+#page4 {
+}
+
 #footer {
     position: absolute;
     z-index: 999999;
@@ -193,4 +149,27 @@ body {
 #footer a {
     color: #FFF;
     text-decoration: none;
+}
+
+#scanLine {
+    position: absolute;
+    z-index: 10;
+    margin-top: 20vh;
+    width: 100%;
+    text-align: center;
+    animation: scan 3s infinite linear;
+    -webkit-animation: scan 3s infinite linear;
+}
+
+#scanLine > img {
+    width: 80%;
+}
+
+@keyframes scan {
+    0% {
+        margin-top: 20vh;
+    }
+    100% {
+        margin-top: 60vh;
+    }
 }
