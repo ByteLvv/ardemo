@@ -33,6 +33,7 @@ class App {
             this.webAR.tryCamera().then(msg => {
                 isOpening = false;
                 this.openPage('page1', 'page2');
+                this.toast('请扫描居民身份证有国徽的那一面来体验', 5000);
 
                 // 开始识别
                 this.search();

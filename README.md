@@ -94,3 +94,12 @@ http://127.0.0.1:3001/video
 ### 6. 示例下载
 
 [示例下载: https://github.com/wujianar/ardemo](https://github.com/wujianar/ardemo)
+
+### 7. 在线体验，android版微信扫码就可以体验。
+
+识别图片
+![image text](marker.jpg)
+
+预览demo二维码
+![image text](qrcode.png)
+
