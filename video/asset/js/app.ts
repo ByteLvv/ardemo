@@ -38,11 +38,14 @@ class App {
                 console.error(err);
                 alert('打开摄像头失败');
             });
+
+            this.createVideo();
         });
 
         // 点击直接体验
         document.querySelector('#btnShow').addEventListener('click', () => {
             this.openPage('page1', 'page4');
+            this.createVideo();
             this.showVideo({'videoUrl': 'asset/videos/demo.mp4'});
         });
 
@@ -73,6 +76,20 @@ class App {
             this.showVideo(JSON.parse(msg.brief));
             // this.showVideo({'videoUrl': 'asset/videos/demo.mp4'});
         });
+    }
+
+    private createVideo(): void {
+        const video = document.createElement('video');
+        video.setAttribute('id', 'showVideo');
+        video.setAttribute('playsinline', 'playsinline');
+        video.setAttribute('style', 'width:100%;height:100%');
+        video.setAttribute('loop', 'loop');
+        video.play().then(() => {
+            console.info('play ok');
+        }).catch(err => {
+            console.info('play error');
+        });
+        document.querySelector('#page4').appendChild(video);
     }
 
     private showVideo(setting: any): void {
