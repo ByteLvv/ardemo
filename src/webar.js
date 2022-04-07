@@ -86,7 +86,7 @@ class WebAR {
                     else if (cameraSize.width < window.innerWidth) {
                         this.videoElement.setAttribute('width', `${window.innerWidth}px`);
                     }
-                    resolve();
+                    resolve(true);
                 };
             }).catch(err => {
                 reject(err);
@@ -121,11 +121,11 @@ class WebAR {
                 data.append('file', blob);
                 this.httpPost(data).then(res => res.json()).then(rs => {
                     this.isSearching = false;
-                    if (rs.code === 0) {
+                    if (rs.code === 200) {
                         if (autoStop) {
                             this.stopSearch();
                         }
-                        callback(rs.result);
+                        callback(rs.data);
                     }
                 }).catch(err => {
                     this.isSearching = false;
